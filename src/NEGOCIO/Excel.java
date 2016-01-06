@@ -58,20 +58,19 @@ public class Excel {
         
     }
     
-    public static String guardarXlsx(XSSFWorkbook wb) throws IOException
+    public static String guardarXlsx(XSSFWorkbook wb, String doc) throws IOException
     {
         System.gc();
         log.trace("-------------------- Escribiendo y guardando excel final  -----------------------------");
-        String strDate;
-            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
-            Date now = new Date();
-            strDate = sdfDate.format(now);
-            
-            
-            String doc = "C:\\Informes_Java\\Velocidades-" + strDate + "-" + now.getHours()
-                    +now.getMinutes()
-                    +now.getSeconds()
-                    + ".xlsx";
+//        String strDate;
+//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+//        Date now = new Date();
+//        strDate = sdfDate.format(now);
+//            
+//        String doc = "C:\\Informes_Java\\Velocidades-" + strDate + "-" + now.getHours()
+//            +now.getMinutes()
+//            +now.getSeconds()
+//            + ".xlsx";
             
             try
             {

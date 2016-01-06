@@ -11,7 +11,9 @@ import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.swing.*;
 import org.apache.log4j.Logger;
@@ -68,9 +70,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtIni = new javax.swing.JTextField();
         txtFin = new javax.swing.JTextField();
-        rbtTodos = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        rbtTodos = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,17 +97,27 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel3.setText("HOJAS");
 
         txtIni.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        txtIni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIniKeyTyped(evt);
+            }
+        });
 
         txtFin.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
-
-        rbtTodos.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
-        rbtTodos.setText("TODOS");
+        txtFin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFinKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
         jLabel4.setText("INICIO");
 
         jLabel5.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
         jLabel5.setText("FIN");
+
+        rbtTodos.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        rbtTodos.setText("TODOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,10 +157,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
                             .addComponent(txtFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbtTodos)
-                            .addComponent(btnInforme)))
+                            .addComponent(btnInforme)
+                            .addComponent(rbtTodos)))
                     .addComponent(jLabel5))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnInforme, jCalAno, jCalMes, jLabel2, jLabel3, jLabel4, jLabel5, lblHojas, rbtTodos, txtFin, txtIni});
@@ -196,6 +208,21 @@ public class VistaPrincipal extends javax.swing.JFrame {
         joption = JOptionPane.showConfirmDialog(null, "DESEA INICIAR EL INFORME"
                 ,"INICIO INFORME", JOptionPane.YES_NO_OPTION, WIDTH, icon());
         
+        
+        //creamos nombre del documento final.
+        
+        String strDate;
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+        Date now = new Date();
+        strDate = sdfDate.format(now);
+            
+        String doc = "C:\\Informes_Java\\Velocidades-" + strDate 
+            //+ "-" 
+            //+ now.getHours()
+            //+now.getMinutes()
+            //+now.getSeconds()
+            + ".xlsx";
+        
         if(joption == JOptionPane.YES_OPTION)
         {
             log.trace("-------------------> Iniciar generacion de informe");
@@ -205,23 +232,37 @@ public class VistaPrincipal extends javax.swing.JFrame {
         XSSFWorkbook wb = null;
         ArrayList<HojaDto> hojas = null;
         
-        try{
-            if(rbtTodos.isSelected())
-            {
+        
+        
+        if(rbtTodos.isSelected()){
+            try{
                 hojas = HojaDao.ObtenerHojas();
-            }else
-            {
-                hojas = HojaDao.ObtenerHojasRango(Integer.parseInt(txtIni.getText()), Integer.parseInt(txtFin.getText()));
+                        
+                int cant = hojas.size();
+                JOptionPane.showMessageDialog(null, "Cantidad de Hojas " + cant);
+                //lblHojas.setText("Cantidad de Hojas " + cant);
+            } catch(Exception e){
+            log.fatal(e);
+            JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,
+                    "ERROR",WIDTH, icon());
             }
+        }else{
+            try{
+                hojas = HojaDao.ObtenerHojasRango(Integer.parseInt(txtIni.getText()),
+                    Integer.parseInt(txtFin.getText()));
                 
                 int cant = hojas.size();
-                lblHojas.setText("Cantidad de Hojas " + cant);
+                JOptionPane.showMessageDialog(null, "Cantidad de Hojas " + cant);
                 
-//            } catch(Exception e){
-//                log.fatal(e);
-//                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,"ERROR",WIDTH, icon());
-//            }
-//        try {
+            } catch(Exception e){
+            log.fatal(e);
+            JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,
+                    "ERROR",WIDTH, icon());
+            }
+        }
+        
+        
+        try {
                 libro = Excel.abrirXlsx();
             } catch (Exception ex) 
             {
@@ -229,39 +270,45 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 log.fatal(ex);
             }
             
+        if(libro != null){
             try{
                 for(HojaDto d : hojas)
                 {
-                    d.setAno(jCalAno.getYear());
-                    d.setMes(jCalMes.getMonth() + 1);
+                d.setAno(jCalAno.getYear());
+                d.setMes(jCalMes.getMonth() + 1);
                     if(d.getMes() < 10)
                     {
-                        d.setTabla(d.getTabla() + d.getAno() + "_0" + d.getMes() + "_01");
+                    d.setTabla(d.getTabla() + d.getAno() + "_0" + d.getMes() + "_01");
                     }else
                     {
-                        d.setTabla(d.getTabla() + d.getAno() + "_" + d.getMes() + "_01");
-                    }
+                    d.setTabla(d.getTabla() + d.getAno() + "_" + d.getMes() + "_01");
+                }
                     
                     ArrayList<InformeRow> list = InformeRowDao.ObtenerInfome(d);
-                    
-                    wb = Excel.escribirExcel(libro, list, d.getNombre());
-                    list = null;
-                    System.gc();
-                }
-            } catch (Exception ex){
-                log.fatal(ex);
-                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"ERROR",WIDTH, icon());
-            }
-                if(wb != null)
-                {
+                
+                    libro = Excel.escribirExcel(libro, list, d.getNombre());
+        
                     try
                     {
-                        String doc = Excel.guardarXlsx(wb);
+                        Excel.guardarXlsx(libro, doc);
         
                         btnInforme.setEnabled(true);
                         jCalAno.setEnabled(true);
                         jCalMes.setEnabled(true);
-                        int opDoc = JOptionPane.showConfirmDialog(null, "INFORME GENERADO CORRECTAMENTE\n"
+                        
+                    } 
+                    catch (IOException | HeadlessException ex)
+                    {
+                    log.fatal(ex);
+                    JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"INFO",WIDTH, icon());
+            }
+                   
+                    
+                    list = null;
+                    System.gc();
+            }
+                
+                int opDoc = JOptionPane.showConfirmDialog(null, "INFORME GENERADO CORRECTAMENTE\n"
                                 + "DESEA ABRIR EL DOCUMENTO"
                                 ,"EXCEL GENERADO", JOptionPane.YES_NO_OPTION,WIDTH, icon());
                         if(opDoc == JOptionPane.YES_OPTION)
@@ -273,19 +320,32 @@ public class VistaPrincipal extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,"ERROR",WIDTH, icon());
                             }
                         }
-                    } 
-                    catch (IOException | HeadlessException ex)
-                    {
-                        log.fatal(ex);
-                        JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"INFO",WIDTH, icon());
-                    }
-                }
-        
-        
-        log.trace("----------------> FIN <-----------------------------------");
-    
+            } catch (Exception ex){
+                log.fatal(ex);
+                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"ERROR",WIDTH, icon());
+            }
+        }
         }
     }//GEN-LAST:event_btnInformeActionPerformed
+
+    private void txtIniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIniKeyTyped
+        char c = evt.getKeyChar(); 
+        if(Character.isLetter(c)) { 
+            getToolkit().beep(); 
+            evt.consume(); 
+            //Error.setText("Ingresa Solo Numeros"; 
+        } 
+    }//GEN-LAST:event_txtIniKeyTyped
+
+    private void txtFinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFinKeyTyped
+  
+        char c = evt.getKeyChar(); 
+        if(Character.isLetter(c)) { 
+            getToolkit().beep(); 
+            evt.consume(); 
+            //Error.setText("Ingresa Solo Numeros"; 
+        }
+    }//GEN-LAST:event_txtFinKeyTyped
 
     /**
      * @param args the command line arguments
@@ -333,7 +393,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblHojas;
-    private javax.swing.JRadioButton rbtTodos;
+    private javax.swing.JCheckBox rbtTodos;
     private javax.swing.JTextField txtFin;
     private javax.swing.JTextField txtIni;
     private javax.swing.JLabel txtYo;
