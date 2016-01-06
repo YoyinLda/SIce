@@ -20,17 +20,18 @@ import org.apache.log4j.Logger;
  */
 public class InformeRowDao {
     
-    static Connection conn=null;
+    
     
     private final static Logger log = Logger.getLogger(HojaDao.class);
     
     public static ArrayList<InformeRow> ObtenerInfome(HojaDto dto)
     {
+        
         log.trace("--------- Realizando consulta para informe --------------------");
         log.trace("------------- Hoja " + dto.getNombre() + " --------------------");
         ArrayList<InformeRow> rows = new ArrayList<>();
         try{
-                Connection conexion = Conexion.Enlace(conn);
+            Connection conn = Conexion.Enlace();
                 String query = "select distinct (ci.fec_medida)"
                         +",inf.des_sector"
                         + ",ci.cod_tramo"
@@ -77,7 +78,8 @@ public class InformeRowDao {
                         + "= to_date(to_char(fec_medida, 'dd/mm/yyyy'), 'dd/mm/yyyy') "
                         + "order by fec_medida"
                         ;
-                PreparedStatement informe = conexion.prepareStatement(query);
+                PreparedStatement informe = conn.prepareStatement(query);
+                informe.setQueryTimeout(10);
                 informe.setInt(1, dto.getTramo());
                 informe.setInt(2, dto.getTramo());
                 informe.setString(3, dto.getSentido());
@@ -103,7 +105,7 @@ public class InformeRowDao {
                 }
                 rs = null;
                 informe.close();
-                conexion.close();
+                conn.close();
         }catch(SQLException s){
             log.fatal("Error SQL al ObtenerInfome: "+s.getMessage());
             log.info(dto.getTabla());
