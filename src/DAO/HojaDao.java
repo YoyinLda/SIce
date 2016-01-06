@@ -22,14 +22,12 @@ public class HojaDao {
     
     private final static Logger log = Logger.getLogger(HojaDao.class);
     
-    static Connection conn=null;
-    
     public static ArrayList<HojaDto> ObtenerHojas()
     {
         log.trace("----------Entrando a buscar Hojas ----------------");
         ArrayList<HojaDto> hojas = new ArrayList<>();
         try{
-                Connection conexion = Conexion.Enlace(conn);
+                Connection conexion = Conexion.Enlace();
                 String query = "SELECT * FROM I_VELOCIDADES ORDER BY ID";
                 
                 PreparedStatement hojasq = conexion.prepareStatement(query);
@@ -54,7 +52,7 @@ public class HojaDao {
                 conexion.close();
                 
         } catch(SQLException s){
-            log.fatal("Error SQL al ObtenerHojas: "+s.getMessage());
+            log.fatal("Error SQL al ObtenerHojas: " + s.getMessage());
         } catch(Exception | OutOfMemoryError e){
             log.fatal(e);
         }
@@ -69,7 +67,7 @@ public class HojaDao {
         log.trace("----------Entrando a buscar Hojas ----------------");
         ArrayList<HojaDto> hojas = new ArrayList<>();
         try{
-                Connection conexion = Conexion.Enlace(conn);
+                Connection conexion = Conexion.Enlace();
                 String query = "SELECT * FROM I_VELOCIDADES "
                         + "WHERE ID BETWEEN "
                         + ini
