@@ -1,0 +1,12 @@
+13:21:55,278 TRACE LOG:24 - mensaje de trace
+13:21:55,292 DEBUG LOG:25 - mensaje de debug
+13:21:55,292  INFO LOG:26 - mensaje de info
+13:21:55,292  WARN LOG:27 - mensaje de warn
+13:21:55,292 ERROR LOG:28 - mensaje de error
+13:21:55,292 FATAL LOG:29 - mensaje de fatal
+13:22:18,227 TRACE LOG:24 - mensaje de trace
+13:22:18,231 DEBUG LOG:25 - mensaje de debug
+13:22:18,231  INFO LOG:26 - mensaje de info
+13:22:18,231  WARN LOG:27 - mensaje de warn
+13:22:18,231 ERROR LOG:28 - mensaje de error
+13:22:18,231 FATAL LOG:29 - mensaje de fatal
