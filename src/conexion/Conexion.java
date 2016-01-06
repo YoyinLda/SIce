@@ -20,7 +20,7 @@ public class Conexion {
     public static Connection Enlace()throws SQLException    {
         try {
          Class.forName("oracle.jdbc.OracleDriver");
-         Connection conn=DriverManager.getConnection(url, login, password);
+         conn = DriverManager.getConnection(url, login, password);
         }
         catch(ClassNotFoundException e )
         {
