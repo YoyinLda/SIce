@@ -105,22 +105,7 @@ public class InformeRowDao {
                     informedto.setDatosVelocidad60(rs.getInt("datos.intensidad/60"));
                     informedto.setNum_velocidad(rs.getDouble("num_velocidad"));
                     
-                    if(informedto.getVelocidad() <= 0){
-                        rows.add(informedto);
-                    }else
-                    {
-                        InformeRow newInfDto = new InformeRow();
-                        newInfDto = ArreglaDato(dto, informedto);
-                        
-                        if(newInfDto.getInd_tipo().equals(informedto.getInd_tipo()))
-                        {
-                            newInfDto.setNum_velocidad(informedto.getNum_velocidad());
-                            rows.add(newInfDto);
-                        }else
-                        {
-                            rows.add(informedto);
-                        }
-                    }
+                    rows.add(informedto);
                     informedto = null;
                     }
                 rs = null;
