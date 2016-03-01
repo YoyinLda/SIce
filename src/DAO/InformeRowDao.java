@@ -243,4 +243,96 @@ public class InformeRowDao {
         return dto;
     }
     
+    
+    public static ArrayList<InformeRow> ObtenerInfomeSGTHIST(HojaDto dto)
+    {
+        
+        log.trace("--------- Realizando consulta para informe con base de datos nueva --------------------");
+        log.trace("------------- Hoja " + dto.getNombre() + " --------------------");
+        ArrayList<InformeRow> rows = new ArrayList<>();
+        try{
+            Connection conn = Conexion.EnlaceSGTHIST();
+                String query = "SELECT DISTINCT(CI.FEC_MEDIDA)"
+                        +",S.DESC_SECTOR"
+                        + ",CI.COD_TRAMO"
+                        + ",TE.IDENT"
+                        + ",CI.IND_TIPO"
+                        + ",DECODE(CI.IND_SENTIDO, '-','Norte-Sur', '+','Sur-Norte') NOM_Sentido"
+                        + ",to_char(DATOS.FECHA, 'dd-mm-yyyy hh24:mi:ss') as fecha_"
+                        + ",DATOS.VELOCIDAD"
+                        + ",DATOS.INTENSIDAD/60"
+                        + ",CI.NUM_VELOCIDAD "
+                        + "FROM CI_VELOCIDADES_MEDIAS CI"
+                        + ",SGTCONF.ITS_SECTORES S"
+                        + ",SGTCONF.ITS_TRAMOS T"
+                        + ",SGTCONF.ITS_TRAMOS_EQUIPOS TE"
+                        + "," + dto.getTabla() + " datos"
+                        + ",SGTCONF.CONF_EQUIPOS CE"
+                        + ",SGTCONF.CONF_EQUIPOS_POSICIONES CEP"
+                        
+                        + " WHERE "
+                        + "CI.COD_TRAMO = T.NOMBRE_TRAMO "
+                        + "AND T.COD_SECTOR = S.COD_SECTOR "
+                        + "AND TE.NOMBRE_TRAMO = T.NOMBRE_TRAMO "
+                        + "AND DATOS.IDENTIF = TE.IDENT "
+                        + "AND CI.IND_SENTIDO = TE.SENTIDO "
+                        + "AND TE.IDENT = CE.IDENT "
+                        + "AND CE.IDENT = CEP.IDENT "
+                        + "AND CE.DESCRIPCION <> 'NO EXISTE' "
+                        
+                        + "AND to_date(to_char(CI.FEC_MEDIDA, 'yyyy'), 'yyyy')=to_date('" + dto.getAno() + "', 'yyyy') "
+                        + "AND DECODE(RTRIM(LTRIM(to_char(CI.FEC_MEDIDA, 'MONTH'))), "
+                        + "'ENERO', 1,'FEBRERO', 2,'MARZO', 3, 'ABRIL', 4, 'MAYO' "
+                        + ", 5, 'JUNIO', 6,'JULIO',7,'AGOSTO',8, 'SEPTIEMBRE',9"
+                        + ", 'OCTUBRE',10,'NOVIEMBRE',11, 'DICIEMBRE',12) = " + dto.getMes()
+                        + " AND DECODE(RTRIM(LTRIM(to_char(CI.FEC_MEDIDA, 'DAY'))),"
+                        + "'LUNES', 1,'MARTES', 2,'MIÉRCOLES', 3, 'JUEVES', 4, "
+                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN 2 AND 4 "
+                        + "AND to_date(to_char(CI.FEC_MEDIDA, 'hh24:mi'), 'hh24:mi')=to_date('"+ dto.getHoraFin() +"', 'hh24:mi') "
+                        + "AND ci.cod_tramo = " + dto.getTramo() + " "
+                        + "AND S.COD_SECTOR = " + dto.getSector() + " "
+                        + "AND CI.IND_SENTIDO = '" + dto.getSentido() + "' "
+                        + "AND CEP.ID_UBICACION = " + dto.getUbicacionPM() + " "
+                        + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') > to_date('" + dto.getHoraIni() + "', 'hh24:mi') "
+                        + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') <= to_date('" + dto.getHoraFin() + "', 'hh24:mi') "
+                        + "AND TO_DATE(TO_CHAR(DATOS.FECHA, 'dd/mm/yyyy'), 'dd/mm/yyyy') = TO_DATE(TO_CHAR(CI.FEC_MEDIDA, 'dd/mm/yyyy'), 'dd/mm/yyyy') "
+                        + "ORDER BY CI.FEC_MEDIDA, TE.IDENT,to_char(DATOS.FECHA, 'dd-mm-yyyy hh24:mi:ss')"
+                        ;
+                System.out.println("query nueva " + query);
+                PreparedStatement informe = conn.prepareStatement(query);
+                informe.setQueryTimeout(10);
+                ResultSet rs = informe.executeQuery();
+                while (rs.next()) 
+                {
+                    InformeRow informedto = new InformeRow();
+                    informedto.setFec_medida(rs.getString("fec_medida"));
+                    informedto.setDes_sector(rs.getString("desc_sector"));
+                    informedto.setCod_tramo(rs.getInt("cod_tramo"));
+                    informedto.setNombre(rs.getString("ident"));
+                    informedto.setInd_tipo(rs.getString("ind_tipo"));
+                    informedto.setNom_sentido(rs.getString("nom_sentido"));
+                    informedto.setFecha(rs.getString("fecha_"));
+                    informedto.setVelocidad(rs.getInt("velocidad"));
+                    informedto.setDatosVelocidad60(rs.getInt("datos.intensidad/60"));
+                    informedto.setNum_velocidad(rs.getDouble("num_velocidad"));
+                    
+                    rows.add(informedto);
+                    informedto = null;
+                    }
+                rs = null;
+                informe.close();
+                conn.close();
+        }catch(SQLException s){
+            log.fatal("Error SQL al ObtenerInfome: "+s.getMessage());
+            log.info(dto.getTabla());
+            
+        } catch(Exception | OutOfMemoryError e){
+            log.fatal(e);
+        }
+        
+        log.trace("--------------- Listo Hoja " + dto.getNombre() 
+                + " Con " + rows.size() + " Filas -----------------------");
+        return rows;
+    }
+    
 }

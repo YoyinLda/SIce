@@ -40,6 +40,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         this.setIconImage(icon().getImage());
         log.trace("INICIO APLICACION");
         txtYo.setText("Hecho por Rodrigo Sanchez");
+        this.rbtnNueva.setSelected(true);
         
     }
     
@@ -59,6 +60,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bbddFamily = new javax.swing.ButtonGroup();
         btnInforme = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
@@ -73,6 +75,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         rbtTodos = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        rbtnAntigua = new javax.swing.JRadioButton();
+        rbtnNueva = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +102,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel3.setText("HOJAS");
 
         txtIni.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        txtIni.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtIniFocusLost(evt);
+            }
+        });
         txtIni.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIniKeyTyped(evt);
@@ -104,6 +114,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         txtFin.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        txtFin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFinFocusLost(evt);
+            }
+        });
         txtFin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFinKeyTyped(evt);
@@ -118,6 +133,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         rbtTodos.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
         rbtTodos.setText("TODOS");
+        rbtTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtTodosActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        jLabel6.setText("DDBB");
+
+        bbddFamily.add(rbtnAntigua);
+        rbtnAntigua.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        rbtnAntigua.setText("ANTIGUA (sgt)");
+
+        bbddFamily.add(rbtnNueva);
+        rbtnNueva.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        rbtnNueva.setText("NUEVA (sgthist)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,9 +179,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbtnAntigua)))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnNueva)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCalAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,10 +196,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
                             .addComponent(btnInforme)
                             .addComponent(rbtTodos)))
                     .addComponent(jLabel5))
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnInforme, jCalAno, jCalMes, jLabel2, jLabel3, jLabel4, jLabel5, lblHojas, rbtTodos, txtFin, txtIni});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnInforme, jCalAno, jCalMes, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, lblHojas, rbtTodos, rbtnAntigua, rbtnNueva, txtFin, txtIni});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +216,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                             .addComponent(jCalAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnInforme))
                     .addComponent(jCalMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblHojas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -192,139 +228,154 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     .addComponent(txtIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtTodos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(rbtnAntigua)
+                    .addComponent(rbtnNueva))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(txtYo, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnInforme, jCalAno, jCalMes, jLabel2, jLabel3, jLabel4, jLabel5, lblHojas, rbtTodos, txtFin, txtIni});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnInforme, jCalAno, jCalMes, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, lblHojas, rbtTodos, rbtnAntigua, rbtnNueva, txtFin, txtIni});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
         
-        
-        joption = JOptionPane.showConfirmDialog(null, "DESEA INICIAR EL INFORME"
-                ,"INICIO INFORME", JOptionPane.YES_NO_OPTION, WIDTH, icon());
-        
-        
-        //creamos nombre del documento final.
-        
-        String strDate;
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
-        Date now = new Date();
-        strDate = sdfDate.format(now);
-            
-        String doc = "C:\\Informes_Java\\Velocidades-" + strDate 
-            //+ "-" 
-            //+ now.getHours()
-            //+now.getMinutes()
-            //+now.getSeconds()
-            + ".xlsx";
-        
-        if(joption == JOptionPane.YES_OPTION)
+        if(this.rbtTodos.isSelected() || (txtIni.getText().length() > 0 && txtFin.getText().length() > 0))
         {
-            log.trace("-------------------> Iniciar generacion de informe");
-        
-        
-        XSSFWorkbook libro = null;
-        XSSFWorkbook wb = null;
-        ArrayList<HojaDto> hojas = null;
-        
-        
-        
-        if(rbtTodos.isSelected()){
-            try{
-                hojas = HojaDao.ObtenerHojas();
-                        
-                int cant = hojas.size();
-                JOptionPane.showMessageDialog(null, "Cantidad de Hojas " + cant);
-                //lblHojas.setText("Cantidad de Hojas " + cant);
-            } catch(Exception e){
-            log.fatal(e);
-            JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,
-                    "ERROR",WIDTH, icon());
-            }
-        }else{
-            try{
-                hojas = HojaDao.ObtenerHojasRango(Integer.parseInt(txtIni.getText()),
-                    Integer.parseInt(txtFin.getText()));
-                
-                int cant = hojas.size();
-                JOptionPane.showMessageDialog(null, "Cantidad de Hojas " + cant);
-                
-            } catch(Exception e){
-            log.fatal(e);
-            JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,
-                    "ERROR",WIDTH, icon());
-            }
-        }
-        
-        
-        try {
-                libro = Excel.abrirXlsx();
-            } catch (Exception ex) 
-            {
-                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"ERROR",WIDTH, icon());
-                log.fatal(ex);
-            }
             
-        if(libro != null){
-            try{
-                for(HojaDto d : hojas)
-                {
-                d.setAno(jCalAno.getYear());
-                d.setMes(jCalMes.getMonth() + 1);
-                    if(d.getMes() < 10)
-                    {
-                    d.setTabla(d.getTabla() + d.getAno() + "_0" + d.getMes() + "_01");
-                    }else
-                    {
-                    d.setTabla(d.getTabla() + d.getAno() + "_" + d.getMes() + "_01");
+            joption = JOptionPane.showConfirmDialog(null, "DESEA INICIAR EL INFORME"
+                    ,"INICIO INFORME", JOptionPane.YES_NO_OPTION, WIDTH, icon());
+
+
+            //creamos nombre del documento final.
+
+            String strDate;
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+            Date now = new Date();
+            strDate = sdfDate.format(now);
+
+            String doc = "C:\\Informes_Java\\Velocidades-" + strDate 
+                //+ "-" 
+                //+ now.getHours()
+                //+now.getMinutes()
+                //+now.getSeconds()
+                + ".xlsx";
+
+            if(joption == JOptionPane.YES_OPTION)
+            {
+                log.trace("-------------------> Iniciar generacion de informe");
+
+
+            XSSFWorkbook libro = null;
+            XSSFWorkbook wb = null;
+            ArrayList<HojaDto> hojas = null;
+
+
+
+            if(rbtTodos.isSelected()){
+                try{
+                    hojas = HojaDao.ObtenerHojas();
+
+                    int cant = hojas.size();
+                    JOptionPane.showMessageDialog(null, "Cantidad de Hojas " + cant);
+                    //lblHojas.setText("Cantidad de Hojas " + cant);
+                } catch(Exception e){
+                log.fatal(e);
+                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,
+                        "ERROR",WIDTH, icon());
                 }
-                    
-                    ArrayList<InformeRow> list = InformeRowDao.ObtenerInfome(d);
-                
-                    libro = Excel.escribirExcel(libro, list, d.getNombre());
-        
-                    try
-                    {
-                        Excel.guardarXlsx(libro, doc);
-        
-                        btnInforme.setEnabled(true);
-                        jCalAno.setEnabled(true);
-                        jCalMes.setEnabled(true);
-                        
-                    } 
-                    catch (IOException | HeadlessException ex)
-                    {
+            }else{
+                try{
+                    hojas = HojaDao.ObtenerHojasRango(Integer.parseInt(txtIni.getText()),
+                        Integer.parseInt(txtFin.getText()));
+
+                    int cant = hojas.size();
+                    JOptionPane.showMessageDialog(null, "Cantidad de Hojas " + cant);
+
+                } catch(Exception e){
+                log.fatal(e);
+                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,
+                        "ERROR",WIDTH, icon());
+                }
+            }
+
+
+            try {
+                    libro = Excel.abrirXlsx();
+                } catch (Exception ex) 
+                {
+                    JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"ERROR",WIDTH, icon());
                     log.fatal(ex);
-                    JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"INFO",WIDTH, icon());
-            }
-                   
-                    
-                    list = null;
-                    System.gc();
-            }
-                
-                int opDoc = JOptionPane.showConfirmDialog(null, "INFORME GENERADO CORRECTAMENTE\n"
-                                + "DESEA ABRIR EL DOCUMENTO"
-                                ,"EXCEL GENERADO", JOptionPane.YES_NO_OPTION,WIDTH, icon());
-                        if(opDoc == JOptionPane.YES_OPTION)
+                }
+
+            if(libro != null){
+                try{
+                    for(HojaDto d : hojas)
+                    {
+                    d.setAno(jCalAno.getYear());
+                    d.setMes(jCalMes.getMonth() + 1);
+                        if(d.getMes() < 10)
                         {
-                            try{
-                                Desktop.getDesktop().open(new File(doc));
-                            } catch (Exception e){
-                                log.fatal(e);
-                                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,"ERROR",WIDTH, icon());
-                            }
+                        d.setTabla(d.getTabla() + d.getAno() + "_0" + d.getMes() + "_01");
+                        }else
+                        {
+                        d.setTabla(d.getTabla() + d.getAno() + "_" + d.getMes() + "_01");
+                    }
+                        ArrayList<InformeRow> list = null;
+                        if(rbtnAntigua.isSelected()){
+                            list = InformeRowDao.ObtenerInfome(d);
+                        }else if(rbtnNueva.isSelected()){
+                            list = InformeRowDao.ObtenerInfomeSGTHIST(d);
                         }
-            } catch (Exception ex){
-                log.fatal(ex);
-                JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"ERROR",WIDTH, icon());
+
+                        libro = Excel.escribirExcel(libro, list, d.getNombre());
+
+                        try
+                        {
+                            Excel.guardarXlsx(libro, doc);
+
+                            btnInforme.setEnabled(true);
+                            jCalAno.setEnabled(true);
+                            jCalMes.setEnabled(true);
+
+                        } 
+                        catch (IOException | HeadlessException ex)
+                        {
+                        log.fatal(ex);
+                        JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"INFO",WIDTH, icon());
+                }
+
+
+                        list = null;
+                        System.gc();
+                }
+
+                    int opDoc = JOptionPane.showConfirmDialog(null, "INFORME GENERADO CORRECTAMENTE\n"
+                                    + "DESEA ABRIR EL DOCUMENTO"
+                                    ,"EXCEL GENERADO", JOptionPane.YES_NO_OPTION,WIDTH, icon());
+                            if(opDoc == JOptionPane.YES_OPTION)
+                            {
+                                try{
+                                    Desktop.getDesktop().open(new File(doc));
+                                } catch (Exception e){
+                                    log.fatal(e);
+                                    JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + e,"ERROR",WIDTH, icon());
+                                }
+                            }
+                } catch (Exception ex){
+                    log.fatal(ex);
+                    JOptionPane.showMessageDialog(null, "ERROR AL GENERAR EL INFORME\n" + ex,"ERROR",WIDTH, icon());
+                }
             }
-        }
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR RANGO DE HOJAS O TODAS","INFO",WIDTH, icon());
         }
     }//GEN-LAST:event_btnInformeActionPerformed
 
@@ -346,6 +397,30 @@ public class VistaPrincipal extends javax.swing.JFrame {
             //Error.setText("Ingresa Solo Numeros"; 
         }
     }//GEN-LAST:event_txtFinKeyTyped
+
+    private void rbtTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtTodosActionPerformed
+        // TODO add your handling code here:
+        if(rbtTodos.isSelected())
+        {
+            txtIni.setText(null);
+            txtFin.setText(null);
+        }
+    }//GEN-LAST:event_rbtTodosActionPerformed
+
+    private void txtFinFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFinFocusLost
+        // TODO add your handling code here:
+        if(txtIni.getText().length() > 0 && txtFin.getText().length() > 0)
+        {
+            this.rbtTodos.setSelected(false);
+        }
+    }//GEN-LAST:event_txtFinFocusLost
+
+    private void txtIniFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIniFocusLost
+        // TODO add your handling code here:
+        if(txtIni.getText().length() > 0){
+            rbtTodos.setSelected(false);
+        }
+    }//GEN-LAST:event_txtIniFocusLost
 
     /**
      * @param args the command line arguments
@@ -383,6 +458,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bbddFamily;
     private javax.swing.JButton btnInforme;
     private com.toedter.calendar.JYearChooser jCalAno;
     private com.toedter.calendar.JMonthChooser jCalMes;
@@ -391,9 +467,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblHojas;
     private javax.swing.JCheckBox rbtTodos;
+    private javax.swing.JRadioButton rbtnAntigua;
+    private javax.swing.JRadioButton rbtnNueva;
     private javax.swing.JTextField txtFin;
     private javax.swing.JTextField txtIni;
     private javax.swing.JLabel txtYo;

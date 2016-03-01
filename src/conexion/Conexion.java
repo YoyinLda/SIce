@@ -28,4 +28,23 @@ public class Conexion {
         }
         return conn;
     }
+    
+    
+    public static Connection EnlaceSGTHIST()throws SQLException    {
+        
+        bd="ITS";
+        login="SGTHIST";
+        password="SGTHIST2013";
+        url="jdbc:oracle:thin:@81.207.121.243:1521:ITS";
+        
+        try {
+         Class.forName("oracle.jdbc.OracleDriver");
+         conn = DriverManager.getConnection(url, login, password);
+        }
+        catch(ClassNotFoundException e )
+        {
+            log.fatal("Fallo en EnlaceSGTHIST " + e);
+        }
+        return conn;
+    }
 }
