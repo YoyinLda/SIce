@@ -45,6 +45,8 @@ public class HojaDao {
                     h.setSentido(rs.getString("sentido"));
                     h.setSector(rs.getInt("sector"));
                     h.setUbicacionPM(rs.getInt("ubicacionpm"));
+                    h.setDia_ini(rs.getInt("dia_ini"));
+                    h.setDia_fin(rs.getInt("dia_fin"));
                     hojas.add(h);
                     h = null;
                 }
@@ -64,7 +66,7 @@ public class HojaDao {
     
     public static ArrayList<HojaDto> ObtenerHojasRango(int ini, int fin)
     {
-        log.trace("----------Entrando a buscar Hojas ----------------");
+        log.trace("----------Entrando a buscar Hojas Rango ----------------");
         ArrayList<HojaDto> hojas = new ArrayList<>();
         try{
                 Connection conexion = Conexion.Enlace();
@@ -74,7 +76,7 @@ public class HojaDao {
                         + " AND "
                         + fin
                         + " ORDER BY ID";
-                
+                System.out.println(query);
                 PreparedStatement hojasq = conexion.prepareStatement(query);
                 ResultSet rs = hojasq.executeQuery();
                 while (rs.next()) 
@@ -90,6 +92,8 @@ public class HojaDao {
                     h.setSentido(rs.getString("sentido"));
                     h.setSector(rs.getInt("sector"));
                     h.setUbicacionPM(rs.getInt("ubicacionpm"));
+                    h.setDia_ini(rs.getInt("dia_ini"));
+                    h.setDia_fin(rs.getInt("dia_fin"));
                     hojas.add(h);
                     h = null;
                 }
@@ -97,7 +101,7 @@ public class HojaDao {
                 conexion.close();
                 
         } catch(SQLException s){
-            log.fatal("Error SQL al ObtenerHojas: "+s.getMessage());
+            log.fatal("Error SQL al ObtenerHojasRango: "+s.getMessage());
         } catch(Exception | OutOfMemoryError e){
             log.fatal(e);
         }

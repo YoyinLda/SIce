@@ -73,9 +73,7 @@ public class InformeRowDao {
                         + "AND "
                         + "DECODE(RTRIM(LTRIM(to_char(fecha, 'DAY'))),"
                         + "'LUNES', 1,'MARTES', 2,'MIÉRCOLES', 3, 'JUEVES', 4, "
-                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN 2 AND 4 "
-                        + "AND "
-                        + "to_date(to_char(fecha, 'hh24:mi'), 'hh24:mi') "
+                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN ? AND ? "
                         + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') > to_date('" + dto.getHoraIni() + "', 'hh24:mi') "
                         + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') <= to_date('" + dto.getHoraFin() + "', 'hh24:mi') "
                         + "AND "
@@ -91,6 +89,8 @@ public class InformeRowDao {
                 informe.setString(4, dto.getSentido());
                 informe.setInt(5, dto.getSector());
                 informe.setInt(6, dto.getUbicacionPM());
+                informe.setInt(7, dto.getDia_ini());
+                informe.setInt(8, dto.getDia_fin());
                 ResultSet rs = informe.executeQuery();
                 while (rs.next()) 
                 {
@@ -288,7 +288,7 @@ public class InformeRowDao {
                         + ", 'OCTUBRE',10,'NOVIEMBRE',11, 'DICIEMBRE',12) = " + dto.getMes()
                         + " AND DECODE(RTRIM(LTRIM(to_char(CI.FEC_MEDIDA, 'DAY'))),"
                         + "'LUNES', 1,'MARTES', 2,'MIÉRCOLES', 3, 'JUEVES', 4, "
-                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN 2 AND 4 "
+                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN " + dto.getDia_ini() + " AND " + dto.getDia_fin() + " "
                         + "AND to_date(to_char(CI.FEC_MEDIDA, 'hh24:mi'), 'hh24:mi')=to_date('"+ dto.getHoraFin() +"', 'hh24:mi') "
                         + "AND ci.cod_tramo = " + dto.getTramo() + " "
                         + "AND S.COD_SECTOR = " + dto.getSector() + " "
@@ -301,7 +301,7 @@ public class InformeRowDao {
                         ;
                 System.out.println("query nueva " + query);
                 PreparedStatement informe = conn.prepareStatement(query);
-                informe.setQueryTimeout(10);
+                //informe.setQueryTimeout(10);
                 ResultSet rs = informe.executeQuery();
                 while (rs.next()) 
                 {

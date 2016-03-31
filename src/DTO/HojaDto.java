@@ -22,6 +22,8 @@ public class HojaDto {
     private String sentido;
     private int sector;
     private int ubicacionPM;
+    private int dia_ini;
+    private int dia_fin;
 
     public HojaDto() {
     }
@@ -114,10 +116,34 @@ public class HojaDto {
         this.ubicacionPM = ubicacionPM;
     }
 
+    public int getDia_ini() {
+        return dia_ini;
+    }
+
+    public void setDia_ini(int dia_ini) {
+        this.dia_ini = dia_ini;
+    }
+
+    public int getDia_fin() {
+        return dia_fin;
+    }
+
+    public void setDia_fin(int dia_fin) {
+        this.dia_fin = dia_fin;
+    }
+
     @Override
     public String toString() {
-        return "HojaDto{" + "id=" + id + ", nombre=" + nombre + ", tabla=" + tabla + ", ano=" + ano + ", mes=" + mes + ", horaIni=" + horaIni + ", horaFin=" + horaFin + ", tramo=" + tramo + ", sentido=" + sentido + ", sector=" + sector + ", ubicacionPM=" + ubicacionPM + '}';
+        return "HojaDto{" + "id=" + id + ", nombre=" + nombre + ", tabla=" + tabla + ", ano=" + ano + ", mes=" + mes + ", horaIni=" + horaIni + ", horaFin=" + horaFin + ", tramo=" + tramo + ", sentido=" + sentido + ", sector=" + sector + ", ubicacionPM=" + ubicacionPM + ", dia_ini=" + dia_ini + ", dia_fin=" + dia_fin + '}';
     }
+
+    
+    
+
+    
+    
+
+    
 
     
     
