@@ -59,7 +59,7 @@ public class InformeRowDao {
                         + " AND "
                         + "DECODE(RTRIM(LTRIM(to_char(fec_medida, 'DAY'))),"
                         + "'LUNES', 1,'MARTES', 2,'MIÉRCOLES', 3, 'JUEVES', 4, "
-                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN 2 AND 4 "
+                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN ? AND ? "
                         + "AND"
                         + " to_date(to_char(fec_medida, 'hh24:mi'), 'hh24:mi')=to_date('"+ dto.getHoraFin() +"', 'hh24:mi') "
                         + "AND ci.cod_tramo = ? "
@@ -83,14 +83,16 @@ public class InformeRowDao {
                         ;
                 PreparedStatement informe = conn.prepareStatement(query);
                 informe.setQueryTimeout(10);
-                informe.setInt(1, dto.getTramo());
-                informe.setInt(2, dto.getTramo());
-                informe.setString(3, dto.getSentido());
-                informe.setString(4, dto.getSentido());
-                informe.setInt(5, dto.getSector());
-                informe.setInt(6, dto.getUbicacionPM());
-                informe.setInt(7, dto.getDia_ini());
-                informe.setInt(8, dto.getDia_fin());
+                informe.setInt(1, dto.getDia_ini());
+                informe.setInt(2, dto.getDia_fin());
+                informe.setInt(3, dto.getTramo());
+                informe.setInt(4, dto.getTramo());
+                informe.setString(5, dto.getSentido());
+                informe.setString(6, dto.getSentido());
+                informe.setInt(7, dto.getSector());
+                informe.setInt(8, dto.getUbicacionPM());
+                informe.setInt(9, dto.getDia_ini());
+                informe.setInt(10, dto.getDia_fin());
                 ResultSet rs = informe.executeQuery();
                 while (rs.next()) 
                 {
