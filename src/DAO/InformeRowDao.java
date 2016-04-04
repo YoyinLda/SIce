@@ -299,7 +299,7 @@ public class InformeRowDao {
                         + "AND TO_DATE(TO_CHAR(DATOS.FECHA, 'dd/mm/yyyy'), 'dd/mm/yyyy') = TO_DATE(TO_CHAR(CI.FEC_MEDIDA, 'dd/mm/yyyy'), 'dd/mm/yyyy') "
                         + "ORDER BY CI.FEC_MEDIDA, TE.IDENT,to_char(DATOS.FECHA, 'dd-mm-yyyy hh24:mi:ss')"
                         ;
-                System.out.println("query nueva " + query);
+                log.trace("query nueva " + query);
                 PreparedStatement informe = conn.prepareStatement(query);
                 //informe.setQueryTimeout(10);
                 ResultSet rs = informe.executeQuery();

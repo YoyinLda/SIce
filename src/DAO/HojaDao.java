@@ -76,7 +76,7 @@ public class HojaDao {
                         + " AND "
                         + fin
                         + " ORDER BY ID";
-                System.out.println(query);
+                log.trace("query rango hojas " + query);
                 PreparedStatement hojasq = conexion.prepareStatement(query);
                 ResultSet rs = hojasq.executeQuery();
                 while (rs.next()) 
