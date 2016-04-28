@@ -11,13 +11,19 @@ public class Conexion {
     
     private final static Logger log = Logger.getLogger(Conexion.class);
     
-    static Connection conn=null;
-    static String bd="OFS1";
-    static String login="sgt";
-    static String password="sgt";
-    static String url="jdbc:oracle:thin:@81.207.121.113:1521:OFS1";
+        static Connection conn=null;
+        static String bd=null;
+        static String login=null;
+        static String password=null;
+        static String url=null; 
     
     public static Connection Enlace()throws SQLException    {
+        
+        bd="OFS1";
+        login="sgt";
+        password="sgt";
+        url="jdbc:oracle:thin:@81.207.121.113:1521:OFS1"; 
+        
         try {
          Class.forName("oracle.jdbc.OracleDriver");
          conn = DriverManager.getConnection(url, login, password);
