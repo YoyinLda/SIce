@@ -294,7 +294,7 @@ public class InformeRowDao {
                         + "AND to_date(to_char(CI.FEC_MEDIDA, 'hh24:mi'), 'hh24:mi')=to_date('"+ dto.getHoraFin() +"', 'hh24:mi') "
                         + "AND ci.cod_tramo = " + dto.getTramo() + " "
                         + "AND S.COD_SECTOR = " + dto.getSector() + " "
-                        + "AND CI.IND_SENTIDO = '" + dto.getSentido() + "' "
+                        + "AND CI.IND_SENTIDO = " + dto.getSentido() + " "
                         + "AND CEP.ID_UBICACION = " + dto.getUbicacionPM() + " "
                         + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') > to_date('" + dto.getHoraIni() + "', 'hh24:mi') "
                         + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') <= to_date('" + dto.getHoraFin() + "', 'hh24:mi') "
