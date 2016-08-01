@@ -59,21 +59,21 @@ public class InformeRowDao {
                         + " AND "
                         + "DECODE(RTRIM(LTRIM(to_char(fec_medida, 'DAY'))),"
                         + "'LUNES', 1,'MARTES', 2,'MIÉRCOLES', 3, 'JUEVES', 4, "
-                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN ? AND ? "
+                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN " + dto.getDia_ini() + " AND " + dto.getDia_fin() + " "
                         + "AND"
                         + " to_date(to_char(fec_medida, 'hh24:mi'), 'hh24:mi')=to_date('"+ dto.getHoraFin() +"', 'hh24:mi') "
-                        + "AND ci.cod_tramo = ? "
-                        + "AND inf.cod_tramo = ? "
-                        + "AND ci.ind_sentido = ? "
-                        + "AND inf.sentido = ? "
-                        + "AND inf.cod_sector = ? "
-                        + "AND INF.UBICACION_PM = ? "
+                        + "AND ci.cod_tramo = " + dto.getTramo() + " "
+                        + "AND inf.cod_tramo = " + dto.getTramo() + " "
+                        + "AND ci.ind_sentido = " + dto.getSentido() + " "
+                        + "AND inf.sentido = " + dto.getSentido() + " "
+                        + "AND inf.cod_sector = " + dto.getSector() + " "
+                        + "AND INF.UBICACION_PM = " + dto.getUbicacionPM() + " "
                         + "AND INF.NOMBRE_PM = PMS.NOMBRE "
                         + "AND PMS.ID = DATOS.IDENTIF "
                         + "AND "
                         + "DECODE(RTRIM(LTRIM(to_char(fecha, 'DAY'))),"
                         + "'LUNES', 1,'MARTES', 2,'MIÉRCOLES', 3, 'JUEVES', 4, "
-                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN ? AND ? "
+                        + "'VIERNES', 5, 'SÁBADO', 6, 'DOMINGO',7) BETWEEN " + dto.getDia_ini() + " AND " + dto.getDia_fin() + " "
                         + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') > to_date('" + dto.getHoraIni() + "', 'hh24:mi') "
                         + "AND to_date(to_char(DATOS.FECHA, 'hh24:mi'), 'hh24:mi') <= to_date('" + dto.getHoraFin() + "', 'hh24:mi') "
                         + "AND "
@@ -81,18 +81,19 @@ public class InformeRowDao {
                         + "= to_date(to_char(fec_medida, 'dd/mm/yyyy'), 'dd/mm/yyyy') "
                         + "order by fec_medida"
                         ;
+                log.trace("query bbdd Antigua " + query);
                 PreparedStatement informe = conn.prepareStatement(query);
-                informe.setQueryTimeout(10);
-                informe.setInt(1, dto.getDia_ini());
-                informe.setInt(2, dto.getDia_fin());
-                informe.setInt(3, dto.getTramo());
-                informe.setInt(4, dto.getTramo());
-                informe.setString(5, dto.getSentido());
-                informe.setString(6, dto.getSentido());
-                informe.setInt(7, dto.getSector());
-                informe.setInt(8, dto.getUbicacionPM());
-                informe.setInt(9, dto.getDia_ini());
-                informe.setInt(10, dto.getDia_fin());
+                //informe.setQueryTimeout(10);
+                //informe.setInt(1, dto.getDia_ini());
+                //informe.setInt(2, dto.getDia_fin());
+                //informe.setInt(3, dto.getTramo());
+                //informe.setInt(4, dto.getTramo());
+                //informe.setString(5, dto.getSentido());
+                //informe.setString(6, dto.getSentido());
+                //informe.setInt(7, dto.getSector());
+                //informe.setInt(8, dto.getUbicacionPM());
+                //informe.setInt(9, dto.getDia_ini());
+                //informe.setInt(10, dto.getDia_fin());
                 ResultSet rs = informe.executeQuery();
                 while (rs.next()) 
                 {

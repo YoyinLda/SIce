@@ -28,7 +28,8 @@ public class HojaDao {
         ArrayList<HojaDto> hojas = new ArrayList<>();
         try{
                 Connection conexion = Conexion.Enlace();
-                String query = "SELECT * FROM I_VELOCIDADES ORDER BY ID";
+                String query = "SELECT * FROM I_VELOCIDADES ORDER BY ID"
+                        + "AND VIGENTE = 1";
                 
                 PreparedStatement hojasq = conexion.prepareStatement(query);
                 ResultSet rs = hojasq.executeQuery();
@@ -75,6 +76,7 @@ public class HojaDao {
                         + ini
                         + " AND "
                         + fin
+                        + " AND VIGENTE = 1"
                         + " ORDER BY ID";
                 log.trace("query rango hojas " + query);
                 PreparedStatement hojasq = conexion.prepareStatement(query);
