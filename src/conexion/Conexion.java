@@ -53,4 +53,22 @@ public class Conexion {
         }
         return conn;
     }
+    
+    public static Connection EnlaceSGTCONF()throws SQLException    {
+        
+        bd="ITS";
+        login="SGTCONF";
+        password="SGTCONFSICE2013";
+        url="jdbc:oracle:thin:@81.207.121.243:1521:ITS";
+        
+        try {
+         Class.forName("oracle.jdbc.OracleDriver");
+         conn = DriverManager.getConnection(url, login, password);
+        }
+        catch(ClassNotFoundException e )
+        {
+            log.fatal("Fallo en EnlaceSGTCONF " + e);
+        }
+        return conn;
+    }
 }

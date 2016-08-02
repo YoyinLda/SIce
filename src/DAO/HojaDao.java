@@ -27,10 +27,12 @@ public class HojaDao {
         log.trace("----------Entrando a buscar Hojas ----------------");
         ArrayList<HojaDto> hojas = new ArrayList<>();
         try{
-                Connection conexion = Conexion.Enlace();
-                String query = "SELECT * FROM I_VELOCIDADES ORDER BY ID"
-                        + "AND VIGENTE = 1";
-                
+                Connection conexion = Conexion.EnlaceSGTCONF();
+                String query = "SELECT * FROM SGTCONF.I_VELOCIDADES "
+                        + "WHERE VIGENTE = 1 "
+                        + "ORDER BY ID"
+                        ;
+                log.trace(query);
                 PreparedStatement hojasq = conexion.prepareStatement(query);
                 ResultSet rs = hojasq.executeQuery();
                 while (rs.next()) 
@@ -70,8 +72,8 @@ public class HojaDao {
         log.trace("----------Entrando a buscar Hojas Rango ----------------");
         ArrayList<HojaDto> hojas = new ArrayList<>();
         try{
-                Connection conexion = Conexion.Enlace();
-                String query = "SELECT * FROM I_VELOCIDADES "
+                Connection conexion = Conexion.EnlaceSGTCONF();
+                String query = "SELECT * FROM SGTCONF.I_VELOCIDADES "
                         + "WHERE ID BETWEEN "
                         + ini
                         + " AND "
