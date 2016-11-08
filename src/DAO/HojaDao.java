@@ -30,6 +30,9 @@ public class HojaDao {
                 Connection conexion = Conexion.EnlaceSGTCONF();
                 String query = "SELECT * FROM SGTCONF.I_VELOCIDADES "
                         + "WHERE VIGENTE = 1 "
+                        /*
+                        + "AND ID IN (221,222,223,234,237,238,239) "
+                        */
                         + "ORDER BY ID"
                         ;
                 log.trace(query);
